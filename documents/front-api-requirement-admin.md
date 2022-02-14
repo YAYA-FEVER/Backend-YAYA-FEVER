@@ -8,9 +8,6 @@ front payload
     ...,
     "Authorization": <token>
   }
-  "body": {
-    "id":<id>,
-  }
 }
 ```
 url
