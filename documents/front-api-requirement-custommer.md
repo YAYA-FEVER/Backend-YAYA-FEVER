@@ -1,4 +1,4 @@
-# FRONT-API-REQUIREMENTS
+# FRONT-API-REQUIREMENTS-CUSTOMMER
 
 ## shelf plant list (GET) no token required
 (ลิสของต้นไม้ที่ปลูกอยู่)
