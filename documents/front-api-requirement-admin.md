@@ -1,6 +1,18 @@
 # front-api-requirement-admin.md
 
 ## get plant info (GET) token required => permission admin
+front payload
+```
+{
+  "headers" {
+    ...,
+    "Authorization": <token>
+  }
+  "body": {
+    "id":<id>,
+  }
+}
+```
 url
 ```
 url/<linkname>/id=?
