@@ -12,7 +12,7 @@ class Product(BaseModel):
     detail : Optional[str] = " "
     price : Optional[int]
     ID : int 
-    humidity_soil_front : Optional[int]
+    humidity_soil_front : Optional[int] = -1
     humidity_soil_hard : Optional[int]
     humidity_air_hard : Optional[int]
     height_hard : Optional[int]

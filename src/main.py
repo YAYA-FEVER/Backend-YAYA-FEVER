@@ -266,7 +266,11 @@ def auto_mode(id : int):
 def exist_plant(id :int):
     result = colproduct.find_one({"ID": id},{"_id":0})
     if (result != None):
-        return "found plant"
+        return {
+            "existed": 1 
+        }
     else:
-        return "not found plant"
+        return {
+            "existed": 0
+        }
                 
