@@ -5,16 +5,18 @@ class AuthDetails(BaseModel):
     username: str
     password: str
     permission : Optional[int] = 0
+    basketlist : Optional[list] = []
     
 class Product(BaseModel):
-    plant_name : str
-    detail : str 
-    price : int 
+    plant_name : Optional[str]
+    detail : Optional[str] = " "
+    price : Optional[int]
     ID : int 
     humidity_soil_front : Optional[int]
     humidity_soil_hard : Optional[int]
     humidity_air_hard : Optional[int]
     height_hard : Optional[int]
+    temp : Optional[int]
     activate_auto : Optional[int]=0
     booking : Optional[int]=0
     username : Optional[str]
