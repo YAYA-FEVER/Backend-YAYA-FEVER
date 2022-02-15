@@ -1,7 +1,6 @@
 from fastapi import APIRouter, Depends, HTTPException
 from ..auth import AuthHandler
 from ..schemas import AuthDetails
-from fastapi.encoders import jsonable_encoder
 from pymongo import MongoClient
 
 myclient = MongoClient("localhost",27017)
