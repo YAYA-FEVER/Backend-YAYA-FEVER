@@ -1,3 +1,4 @@
+from sre_constants import SUCCESS
 from fastapi import FastAPI, Depends, HTTPException
 from .auth import AuthHandler
 from .schemas import AuthDetails , Product
@@ -24,38 +25,34 @@ colproduct = db["Product"]
 users = db["Users"]
 
 
-#login system
+##UserAuth system
 auth_handler = AuthHandler()
-# users = []
 
+#Register User
 @app.post('/register', status_code=201)
 def register(auth_details: AuthDetails):
+    #Find that user already use or not.
     result = users.find_one({"username":auth_details.username},{"_id":0})
     if (result):
         print(auth_details.username)
         raise HTTPException(status_code=400, detail='Username is taken')
+    #Register newuser.
     hashed_password = auth_handler.get_password_hash(auth_details.password)
     users.insert_one({
         'username': auth_details.username,
         'password': hashed_password,
         'permission':auth_details.permission
     })
-    return
-
+    return {"detail": "Register SUCCESS"}
 
 @app.post('/login')
 def login(auth_details: AuthDetails):
     result = users.find_one({"username":auth_details.username},{"_id":0})
+    #Check username and password.
     if (result is None) or (not auth_handler.verify_password(auth_details.password, result['password'])):
         raise HTTPException(status_code=401, detail='Invalid username and/or password')
     token = auth_handler.encode_token(result['username'])
     return { 'token': token }
-
-
-@app.get('/unprotected')
-def unprotected():
-    return { 'hello': 'world' }
-
 
 @app.get('/getpermission')
 def protected(username=Depends(auth_handler.auth_wrapper)):
@@ -64,46 +61,37 @@ def protected(username=Depends(auth_handler.auth_wrapper)):
         return {'name': username}
     else:
         raise HTTPException(status_code=401, detail='Permission denined')
-    
-#product
-#admin
+
+
+
+##Plant management and detail.
+##admin
 @app.get('/admin/plant_info/{id}')
 def get_plant_info(id :int, username=Depends(auth_handler.auth_wrapper)):
     result = colproduct.find_one({"ID":id} , {"_id":0,"plant_name":1,"humidity_soil_hard":1,"humidity_air_hard":1,"height_hard":1,"temp":1,"activate_auto":1})
-    resultname = users.find_one({"username": username},{"_id":0})
-    if (result != None) and (resultname["permission"] == 1):
+    userpermission = users.find_one({"username": username})
+    if (result != None) and (userpermission["permission"] == 1):
         return result
-    else : 
-        return {
-            "failed"
-        }
-
-# @app.get('/admin/plant_info/')
-# def get_plant_info(product : Product, username=Depends(auth_handler.auth_wrapper)):
-#     result = colproduct.find_one({"ID" : product["ID"]} , {"_id":0})
-#     resultname = users.find_one({"username": username},{"_id":0})
-#     if (result != None) and (resultname["permission"] == 1):
-#         return result
-#     else : 
-#         return {
-#             "failed"
-#         }
+    elif (result != None) : 
+        raise HTTPException(status_code=403, detail="Plant ID not found")
+    else :
+        raise HTTPException(status_code=401, detail='Permission denined')
 
 @app.post("/admin/auto_mode")
 def auto_mode(product : Product , username=Depends(auth_handler.auth_wrapper)):
     result = colproduct.find_one({"ID": product.ID} , {"_id":0})
-    resultname = users.find_one({"username": username},{"_id":0})
-    if (result != None) and (resultname["permission"] == 1):
+    userpermission = users.find_one({"username": username},{"_id":0})
+    if (result != None) and (userpermission["permission"] == 1):
         query = {"ID": product.ID}
         new = {"$set" : {"activate_auto": product.activate_auto}}
         colproduct.update_one(query,new)
         return {
             "update success"
         }
-    else:
-        return {
-            "failed"
-        }
+    elif (result != None) : 
+        raise HTTPException(status_code=403, detail="Plant ID not found")
+    else :
+        raise HTTPException(status_code=401, detail='Permission denined')
         
 @app.post("/admin/humidity_front_want") # ส่ง ID มาด้วย
 def humidity_front_want(product : Product , username=Depends(auth_handler.auth_wrapper)):
@@ -137,22 +125,6 @@ def new_plant(product : Product , username=Depends(auth_handler.auth_wrapper)):
         return {
             "Updated success"
         }
-
-# @app.put("/admin/update_plant")
-# def update_plant(product : Product , username=Depends(auth_handler.auth_wrapper)):
-#     result = colproduct.find_one({"ID": product.ID} , {"_id":0})
-#     resultname = users.find_one({"username": username},{"_id":0})
-#     if (result != None) and (resultname["permission"] == 1):
-#         query = {"ID": product.ID}
-#         new = {"$set" : {"detail": product.detail}}
-#         colproduct.update_one(query,new)
-#         return {
-#             "update success"
-#         }
-#     else:
-#         return {
-#             "failed"
-#         }
         
 @app.delete("/admin/delete_plant")
 def delete_plant(product : Product , username=Depends(auth_handler.auth_wrapper)):
