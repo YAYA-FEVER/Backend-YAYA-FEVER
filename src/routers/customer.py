@@ -34,18 +34,17 @@ def plant_detail(product : Product):
         return {
             "detail" : result
         }
-    else:
-        return {
-            "detail" : "plant does not exist"
-        }
+    elif (result != None) : 
+        raise HTTPException(status_code=403, detail="Plant ID not found")
+    else :
+        raise HTTPException(status_code=401, detail='Permission denined')
 
 @router.post("/customer/reserve")
 def reserve(product : Product , username=Depends(auth_handler.auth_wrapper)):
     resultproduct = plants.find_one({"ID":product.ID},{"_id":0})
-    resultname = users.find_one({"username": username},{"_id":0})
-    #print(resultname)
+    user = users.find_one({"username": username},{"_id":0})
     if (resultproduct != None) and resultproduct["booking"] == 0:
-        users.update_one({"username" : username},{"$set" : {"basketlist": resultname["basketlist"]+[{"ID":product.ID,"duedate":datetime.today()+timedelta(days=2),"plant_name":resultproduct["plant_name"]}]}})
+        users.update_one({"username" : username},{"$set" : {"basketlist": user["basketlist"]+[{"ID":product.ID,"duedate":datetime.today()+timedelta(days=2),"plant_name":resultproduct["plant_name"]}]}})
         plants.update_one({"ID":product.ID},{"$set": {"booking":1}})
         return {
             "update success"
@@ -62,8 +61,8 @@ def reserve(product : Product , username=Depends(auth_handler.auth_wrapper)):
 
 @router.get("/customer/basket_list")
 def basket_list(username=Depends(auth_handler.auth_wrapper)):
-    resultname = users.find_one({"username": username},{"_id":0})
-    if (resultname["basketlist"] != None):
-        return {"basketlist": resultname["basketlist"]}
+    userpermission = users.find_one({"username": username},{"_id":0})
+    if (userpermission["basketlist"] != None):
+        return {"basketlist": userpermission["basketlist"]}
     else:
         return "not reserve"

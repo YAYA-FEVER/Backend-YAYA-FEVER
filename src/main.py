@@ -17,8 +17,4 @@ app.add_middleware(
 app.include_router(admin.router)
 app.include_router(customer.router)
 app.include_router(hardware.router)
-app.include_router(user.router)
-
-
-
-                
+app.include_router(user.router)           
