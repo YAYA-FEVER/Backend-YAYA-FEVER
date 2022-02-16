@@ -122,4 +122,38 @@ failed
 }
 ```
 
+## Admin
 
+### __PLant__ __info__
+
+url
+```
+http://127.0.0.1:8000/admin/plant_info/{id}
+```
+
+respond
+
+success
+```
+{
+    ...
+}
+```
+
+can't find plant
+```
+{
+    "data": {
+        "detail": "Plant ID not found"
+    }
+}
+```
+
+permission denied
+```
+{
+    "data": {
+        "detail": "Permission denied"
+    }
+}
+```
