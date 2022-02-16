@@ -28,7 +28,8 @@ body
 }
 ```
 response
-sucess
+
+success
 ```
 {
     "Register success"
@@ -66,7 +67,8 @@ body
 }
 ```
 response
-sucess
+
+success
 ```
 {
     "token" : <generated token>
@@ -104,7 +106,8 @@ body
 }
 ```
 response
-sucess
+
+success
 ```
 {
     "username" : <username>
