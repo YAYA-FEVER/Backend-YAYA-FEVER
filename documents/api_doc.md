@@ -132,7 +132,8 @@ url
 http://127.0.0.1:8000/admin/plant_info/{id}
 ```
 
-respon
+response
+
 success
 ```
 {
@@ -158,11 +159,11 @@ permission denied
 }
 ```
 
-### __set__ Auto mode
+### __Auto__ __mode__
 
 url
 ```
-http://127.0.0.1:8000/admin/auto_mode}
+http://127.0.0.1:8000/admin/auto_mode
 ```
 
 body
@@ -170,4 +171,33 @@ body
 {
     "ID": <int>
 }
+```
+
+response
+
+success
+```
+{
+    "updated success"
+}
+```
+
+permission denied
+```
+{
+    "data": {
+        "datail": "Permission denined"
+    }
+}
+```
+
+### __Update__ __plant__
+url
+```
+http://127.0.0.1:8000/admin/update_plant
+```
+
+body
+```
+
 ```
