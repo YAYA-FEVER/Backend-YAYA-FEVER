@@ -44,7 +44,7 @@ def login(auth_details: AuthDetails):
 
 #Check permistion
 @router.get('/getpermission')
-def protected(username=Depends(auth_handler.auth_wrapper)):
+def protected(username = Depends(auth_handler.auth_wrapper)):
     result = users.find_one({"username" : username},{"_id":0})
     if result["permission"] == 1:
         return {'name': username}
