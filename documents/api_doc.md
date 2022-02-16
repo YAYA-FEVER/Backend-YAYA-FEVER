@@ -125,15 +125,14 @@ failed
 
 ## Admin
 
-### __PLant__ __info__
+### __Plant__ __info__
 
 url
 ```
 http://127.0.0.1:8000/admin/plant_info/{id}
 ```
 
-respond
-
+respon
 success
 ```
 {
@@ -156,5 +155,19 @@ permission denied
     "data": {
         "detail": "Permission denied"
     }
+}
+```
+
+### set Auto mode
+
+url
+```
+http://127.0.0.1:8000/admin/auto_mode}
+```
+
+body
+```
+{
+    "ID": <int>
 }
 ```
