@@ -131,14 +131,28 @@ url
 ```
 http://127.0.0.1:8000/admin/plant_info/{id}
 ```
+payload
+```
+{
+  "headers" {
+    ...,
+    "Authorization": <token>
+  }
+}
+```
 
 response
 
 success
 ```
 {
-    ...
-}
+    "plant_name": <str>
+    "humidity_soil": <int>
+    "humidity_air_hard": <int>
+    "height_hard": <int>
+    "temp": <int>
+    "activity_auto": <int>
+}    
 ```
 
 can't find plant
@@ -166,10 +180,103 @@ url
 http://127.0.0.1:8000/admin/auto_mode
 ```
 
-body
+payload
 ```
 {
+  "headers" {
+    ...,
+    "Authorization": <token>
+  }
+  "body": {
     "ID": <int>
+    "activate": <int>
+  }
+}
+```
+
+response
+
+success
+```
+{
+    "success"
+}
+```
+
+permission denied
+```
+{
+    "data": {
+        "datail": "Permission denined"
+    }
+}
+```
+
+### __Update__ __plant__
+
+url
+```
+http://127.0.0.1:8000/admin/update_plant
+```
+
+payload
+```
+{
+    "header": {
+        ...,
+        "Authorization": <token>
+    }
+    "body": {
+        "plant_name": optional<str>
+        "detail": optional<str>
+        "price": optional<int>
+        "ID": <int>
+}
+```
+
+response
+
+If doesn't have ID in database add new plant
+success
+```
+{
+    "Added success"
+}
+```
+
+If already have ID in database update plant
+```
+{
+    "Update success"
+}
+```
+
+permission denied
+```
+{
+    "data": {
+        "detail": "Permission denied"
+    }
+}
+```
+
+### __Set__ __humidity__
+
+url
+```
+http://127.0.0.1:8000/admin/humidity_front_want
+```
+
+payload
+```
+{
+    "header": {
+        ...,
+        "Authorization": <token>
+    }
+    "body": {
+        "ID": <int>
+        "humidity_soil_front": <int>
 }
 ```
 
@@ -186,18 +293,46 @@ permission denied
 ```
 {
     "data": {
-        "datail": "Permission denined"
+        "detail": "Permission denied"
     }
 }
 ```
 
-### __Update__ __plant__
+### __Delete__ __plant__
+
 url
 ```
-http://127.0.0.1:8000/admin/update_plant
+http://127.0.0.1:8000/admin/delete_plant
 ```
 
-body
+payload
+```
+{
+    "header": {
+        ...,
+        "Authorization": <token>
+    }
+    "body": {
+        "ID": <int>
+}
 ```
 
+reponse
+
+success
 ```
+{
+    "delete success"
+}
+```
+
+permission denied
+```
+{
+    "data": {
+        "detail": "Permission denined"
+    }
+}
+```
+
+
