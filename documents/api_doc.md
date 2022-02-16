@@ -1,7 +1,8 @@
 # API DOCUMENT
 
 ## MENU
-- [Auth](https://github.com/YAYA-FEVER/Backend-YAYA-FEVER/edit/main/documents/api_doc.md#auth)
+- [Auth](https://github.com/YAYA-FEVER/Backend-YAYA-FEVER/blob/main/documents/api_doc.md#auth)
+- [Admin](https://github.com/YAYA-FEVER/Backend-YAYA-FEVER/blob/main/documents/api_doc.md#admin)
 ## Auth
 <hr>
 
