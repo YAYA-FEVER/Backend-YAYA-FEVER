@@ -16,7 +16,7 @@
 url
 
 ```
-http://127.0.0.1:8000/register
+http://127.0.0.1:8000/users/register
 ```
 
 body
@@ -30,7 +30,9 @@ body
 response
 sucess
 ```
-null
+{
+    "Register success"
+}
 ```
 failed
 ```
@@ -52,7 +54,7 @@ failed
 url
 
 ```
-http://127.0.0.1:8000/login
+http://127.0.0.1:8000/users/login
 ```
 
 body
@@ -91,7 +93,7 @@ failed
 
 url
 ```
-http://127.0.0.1:8000/getpermission
+http://127.0.0.1:8000/users/getpermission
 ```
 
 body
