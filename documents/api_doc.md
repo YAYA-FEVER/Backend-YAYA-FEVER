@@ -158,7 +158,7 @@ permission denied
 }
 ```
 
-### set Auto mode
+### __set__ Auto mode
 
 url
 ```
