@@ -14,6 +14,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+
 app.include_router(admin.router)
 app.include_router(customer.router)
 app.include_router(hardware.router)

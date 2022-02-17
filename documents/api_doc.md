@@ -1,7 +1,8 @@
 # API DOCUMENT
 
 ## MENU
-- [Auth](https://github.com/YAYA-FEVER/Backend-YAYA-FEVER/edit/main/documents/api_doc.md#auth)
+- [Auth](https://github.com/YAYA-FEVER/Backend-YAYA-FEVER/blob/main/documents/api_doc.md#auth)
+- [Admin](https://github.com/YAYA-FEVER/Backend-YAYA-FEVER/blob/main/documents/api_doc.md#admin)
 ## Auth
 <hr>
 
@@ -16,7 +17,7 @@
 url
 
 ```
-http://127.0.0.1:8000/register
+http://127.0.0.1:8000/users/register
 ```
 
 body
@@ -28,9 +29,12 @@ body
 }
 ```
 response
-sucess
+
+success
 ```
-null
+{
+    "Register success"
+}
 ```
 failed
 ```
@@ -52,7 +56,7 @@ failed
 url
 
 ```
-http://127.0.0.1:8000/login
+http://127.0.0.1:8000/users/login
 ```
 
 body
@@ -64,7 +68,8 @@ body
 }
 ```
 response
-sucess
+
+success
 ```
 {
     "token" : <generated token>
@@ -91,7 +96,7 @@ failed
 
 url
 ```
-http://127.0.0.1:8000/getpermission
+http://127.0.0.1:8000/users/getpermission
 ```
 
 body
@@ -102,13 +107,226 @@ body
 }
 ```
 response
-sucess
+
+success
 ```
 {
     "username" : <username>
 }
 ```
 failed
+```
+{
+    "data": {
+        "detail": "Permission denined"
+    }
+}
+```
+
+## Admin
+
+### __Plant__ __info__
+
+url
+```
+http://127.0.0.1:8000/admin/plant_info/{id}
+```
+payload
+```
+{
+  "headers" {
+    ...,
+    "Authorization": <token>
+  }
+}
+```
+
+response
+
+success
+```
+{
+    "plant_name": <str>
+    "humidity_soil": <int>
+    "humidity_air_hard": <int>
+    "height_hard": <int>
+    "temp": <int>
+    "activity_auto": <int>
+}    
+```
+
+can't find plant
+```
+{
+    "data": {
+        "detail": "Plant ID not found"
+    }
+}
+```
+
+permission denied
+```
+{
+    "data": {
+        "detail": "Permission denied"
+    }
+}
+```
+
+### __Auto__ __mode__
+
+url
+```
+http://127.0.0.1:8000/admin/auto_mode
+```
+
+payload
+```
+{
+  "headers" {
+    ...,
+    "Authorization": <token>
+  }
+  "body": {
+    "ID": <int>
+    "activate": <int>
+  }
+}
+```
+
+response
+
+success
+```
+{
+    "success"
+}
+```
+
+permission denied
+```
+{
+    "data": {
+        "datail": "Permission denined"
+    }
+}
+```
+
+### __Update__ __plant__
+
+url
+```
+http://127.0.0.1:8000/admin/update_plant
+```
+
+payload
+```
+{
+    "header": {
+        ...,
+        "Authorization": <token>
+    }
+    "body": {
+        "plant_name": optional<str>
+        "detail": optional<str>
+        "price": optional<int>
+        "ID": <int>
+}
+```
+
+response
+
+If doesn't have ID in database add new plant
+success
+```
+{
+    "Added success"
+}
+```
+
+If already have ID in database update plant
+```
+{
+    "Update success"
+}
+```
+
+permission denied
+```
+{
+    "data": {
+        "detail": "Permission denied"
+    }
+}
+```
+
+### __Set__ __humidity__
+
+url
+```
+http://127.0.0.1:8000/admin/humidity_front_want
+```
+
+payload
+```
+{
+    "header": {
+        ...,
+        "Authorization": <token>
+    }
+    "body": {
+        "ID": <int>
+        "humidity_soil_front": <int>
+}
+```
+
+response
+
+success
+```
+{
+    "updated success"
+}
+```
+
+permission denied
+```
+{
+    "data": {
+        "detail": "Permission denied"
+    }
+}
+```
+
+### __Delete__ __plant__
+
+url
+```
+http://127.0.0.1:8000/admin/delete_plant
+```
+
+payload
+```
+{
+    "header": {
+        ...,
+        "Authorization": <token>
+    }
+    "body": {
+        "ID": <int>
+}
+```
+
+reponse
+
+success
+```
+{
+    "delete success"
+}
+```
+
+permission denied
 ```
 {
     "data": {
