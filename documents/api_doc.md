@@ -146,11 +146,11 @@ response
 success
 ```
 {
-    "plant_name": <str>
-    "humidity_soil": <int>
-    "humidity_air_hard": <int>
-    "height_hard": <int>
-    "temp": <int>
+    "plant_name": <str>,
+    "humidity_soil": <int>,
+    "humidity_air_hard": <int>,
+    "height_hard": <int>,
+    "temp": <int>,
     "activity_auto": <int>
 }    
 ```
@@ -186,9 +186,9 @@ payload
   "headers" {
     ...,
     "Authorization": <token>
-  }
+  },
   "body": {
-    "ID": <int>
+    "ID": <int>,
     "activate": <int>
   }
 }
@@ -225,11 +225,11 @@ payload
     "header": {
         ...,
         "Authorization": <token>
-    }
+    },
     "body": {
-        "plant_name": optional<str>
-        "detail": optional<str>
-        "price": optional<int>
+        "plant_name": optional<str>,
+        "detail": optional<str>,
+        "price": optional<int>,
         "ID": <int>
 }
 ```
@@ -273,7 +273,7 @@ payload
     "header": {
         ...,
         "Authorization": <token>
-    }
+    },
     "body": {
         "ID": <int>
         "humidity_soil_front": <int>
@@ -311,7 +311,7 @@ payload
     "header": {
         ...,
         "Authorization": <token>
-    }
+    },
     "body": {
         "ID": <int>
 }
@@ -334,5 +334,64 @@ permission denied
     }
 }
 ```
+
+## Customer
+
+### __Show__ __plant__
+
+url
+```
+http://127.0.0.1:8000/customer/shelf/plant
+```
+
+respond
+```
+[
+    {
+        "ID": <int>,
+        "booking": <int 1: reserve, 2: not reserve>
+    },
+    ...
+]
+```
+
+###  __plant__ __detail__
+
+url
+```
+http://127.0.0.1:8000/customer/plant_detail
+```
+
+payload
+```
+{
+    "ID": <int>
+}
+```
+
+respond
+
+found plant
+```
+{
+    "plant_name": <str>,
+    "detail": <str>,
+    "price": <int>,
+    "ID": <int>
+}
+```
+
+plant not found
+```
+{
+    "data":{
+        "detail": "Plant ID not found"
+    }
+}
+```
+
+### __reserve__
+
+
 
 
