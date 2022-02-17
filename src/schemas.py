@@ -5,7 +5,7 @@ class AuthDetails(BaseModel):
     username: str
     password: str
     permission : Optional[int] = 0
-    basketlist : Optional[list] = []
+    basketlist : Optional[dict] = {}
     
 class Product(BaseModel):
     plant_name : Optional[str]
@@ -17,7 +17,7 @@ class Product(BaseModel):
     humidity_air_hard : Optional[int]
     height_hard : Optional[int]
     temp : Optional[int]
-    activate_auto : Optional[int]=0
-    booking : Optional[int]=0
+    activate_auto : Optional[int] = 0
+    booking : Optional[int] = 0
     username : Optional[str]
     duedate : Optional[int] = 3
