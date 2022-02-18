@@ -431,7 +431,8 @@ Have plant in basket
         "ID": <int>,
         "duedate": <datetime>,
         "plant_name": <str>
-    },...
+    },
+    ...
     
 ]
 ```
