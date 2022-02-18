@@ -20,5 +20,5 @@ class Product(BaseModel):
     activate_auto : Optional[int] = 0
     booking : Optional[int] = 0
     username : Optional[str]
-    duedate : Optional[int] = 3
+    duedate : Optional[int]
     water_time : Optional[int] = 0
