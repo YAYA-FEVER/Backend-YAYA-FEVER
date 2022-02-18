@@ -72,6 +72,10 @@ def auto_mode(id: int):
 def exist_plant(id: int):
     result = plants.find_one({"ID": id})
     if (result is not None):
-        return "found plant"
+        return {
+            "existed": 1
+        }
     else:
-        raise HTTPException(status_code=403, detail="Plant ID not found")
+        return {
+            "existed": 0
+        }
