@@ -4,14 +4,9 @@
 - [Auth](https://github.com/YAYA-FEVER/Backend-YAYA-FEVER/blob/main/documents/api_doc.md#auth)
 - [Admin](https://github.com/YAYA-FEVER/Backend-YAYA-FEVER/blob/main/documents/api_doc.md#admin)
 - [Customer](https://github.com/YAYA-FEVER/Backend-YAYA-FEVER/blob/main/documents/api_doc.md#customer)
-## Auth
 <hr>
 
-
-
-
-
-
+## Auth
 
 ### __register__
 
@@ -424,7 +419,7 @@ already reserve
 
 url
 ```
-http://127.0.0.1:8000/customer/basket_ist
+http://127.0.0.1:8000/customer/basket_list
 ```
 
 Responses
