@@ -190,7 +190,7 @@ payload
   },
   "body": {
     "ID": <int>,
-    "activate": <int>
+    "activate_auto": <int>
   }
 }
 ```
