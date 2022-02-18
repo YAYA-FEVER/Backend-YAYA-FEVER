@@ -380,7 +380,7 @@ found plant
 plant not found
 ```
 {
-    "data":{
+    "data": {
         "detail": "Plant ID not found"
     }
 }
@@ -436,6 +436,177 @@ Have plant in basket
     
 ]
 ```
+
+## Hardware
+
+### __Update__ __soil__
+
+url
+```
+http://127.0.0.1:8000/hardware/update/soil
+```
+
+Request body
+```
+{
+    "ID": <int>,
+    "humidity_soil_hard": <int>
+}
+```
+
+Responses
+
+plant ID found 
+```
+{
+    "update success"   
+}
+```
+
+plant ID not found
+```
+{
+    "data": {
+        "detail": "Plant ID not found"
+    }
+}
+```
+
+### __Update__ __air__
+
+url
+```
+http://127.0.0.1:8000/hardware/update/soil
+```
+
+Request body
+```
+{
+    "ID": <int>
+    "humidity_air_hard": <float>
+    "temp": <float>
+}
+```
+
+Responses
+
+plant ID found 
+```
+{
+    "update success"   
+}
+```
+
+plant ID not found
+```
+{
+    "data": {
+        "detail": "Plant ID not found"
+    }
+}
+```
+
+### __Update__ __height__
+
+url
+```
+http://127.0.0.1:8000/hardware/update_height
+```
+
+Request body
+```
+{
+    "ID": <int>,
+    "height_hard": <int>
+}
+```
+
+Responses
+
+plant ID found 
+```
+{
+    "update success"   
+}
+```
+
+plant ID not found
+```
+{
+    "data": {
+        "detail": "Plant ID not found"
+    }
+}
+```
+
+### __Auto__ __mode__
+
+url
+```
+http://127.0.0.1:8000/hardware/auto_mode/{ID}
+```
+
+Request body
+```
+{
+    "ID": <int>
+}
+```
+
+Responses
+
+plant ID found
+```
+{
+    "humidity_soil_front": <int>,
+    "activate_auto": <int 1: on, 0: off>
+    "water_time" : <int>
+}
+```
+
+plant ID not found
+```
+{
+    "data": {
+        "detail": "Plant ID not found"
+    }
+}
+```
+
+### __Check__ __exist__ __plant__
+
+url
+```
+http://127.0.0.1:8000/hardware/exist_plant/{ID}
+```
+
+Request body
+```
+{
+    "ID": <int>
+}
+```
+
+Responses
+
+plant ID found
+```
+{
+    "existed": 1
+}
+```
+
+plant ID not found
+```
+{
+    "existed": 0
+}
+```
+
+
+
+
+
 
 
 
