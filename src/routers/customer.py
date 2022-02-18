@@ -46,11 +46,11 @@ def reserve(product: Product, username=Depends(auth_handler.auth_wrapper)):
     if (resultproduct is not None) and resultproduct["booking"] == 0:
         query = {"username" : username}
         new = {"$set" : {
-            "basketlist": user["basketlist"] + {{
+            "basketlist": user["basketlist"] + [{
                 "ID": product.ID,
                 "duedate": datetime.today()+timedelta(days=2),
                 "plant_name": resultproduct["plant_name"]
-            }}
+            }]
         }}
         users.update_one(query, new)
         plants.update_one({"ID": product.ID}, {"$set": {"booking":1}})
