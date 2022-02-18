@@ -3,6 +3,7 @@
 ## MENU
 - [Auth](https://github.com/YAYA-FEVER/Backend-YAYA-FEVER/blob/main/documents/api_doc.md#auth)
 - [Admin](https://github.com/YAYA-FEVER/Backend-YAYA-FEVER/blob/main/documents/api_doc.md#admin)
+- [Customer](https://github.com/YAYA-FEVER/Backend-YAYA-FEVER/blob/main/documents/api_doc.md#customer)
 ## Auth
 <hr>
 
@@ -148,9 +149,9 @@ success
 {
     "plant_name": <str>,
     "humidity_soil": <int>,
-    "humidity_air_hard": <int>,
+    "humidity_air_hard": <float>,
     "height_hard": <int>,
-    "temp": <int>,
+    "temp": <float>,
     "activity_auto": <int>
 }    
 ```
@@ -391,6 +392,35 @@ plant not found
 ```
 
 ### __reserve__
+```
+http://127.0.0.1:8000/customer/reserve
+```
+
+Request body
+```
+{
+    "ID": <int>
+    "username": <str>
+}
+```
+
+Responses
+
+success
+```
+{
+    "update success"
+}
+```
+
+already reserve
+```
+{
+    "already reserve"
+}
+
+###
+
 
 
 
