@@ -1,3 +1,4 @@
+from logging import NullHandler
 from math import prod
 from fastapi import APIRouter, Depends, HTTPException
 from ..schemas import Product
@@ -98,7 +99,13 @@ def update_reserve(product: Product, username=Depends(auth_handler.auth_wrapper)
             "basketlist": newbasket
         }}
         users.update_one(query, new)
-        plants.update_one({"ID": product.ID}, {"$set": {"booking": 0}})
+        plantquery = {"ID": product.ID}
+        plantnew = {"$set": {
+                "booking": 0,
+                "duedate": None,
+                "username": None
+        }}
+        plants.update_one(plantquery, plantnew)
         return {
             "update success"
         }
