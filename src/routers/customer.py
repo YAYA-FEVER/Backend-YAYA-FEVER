@@ -27,6 +27,7 @@ def shelf_plant():
     print(list(result))
     for i in range(len(result)):
         if ((i+1)%3 == 0):
+            plant_list3.append(result[i])
             plant_list.append(plant_list3)
             plant_list3 = [];
         else:
