@@ -274,6 +274,7 @@ payload
     "body": {
         "ID": <int>
         "humidity_soil_front": <int>
+        "water_time": <int>
 }
 ```
 
@@ -413,6 +414,36 @@ already reserve
 ```
 {
     "already reserve"
+}
+```
+
+### __Unreserve__
+
+```
+http://127.0.0.1:8000/customer/unreserve
+```
+
+Request body
+```
+{
+    "ID": <int>
+    "username": <str>
+}
+```
+
+Responses
+
+success
+```
+{
+    "update success"
+}
+```
+
+Not reserve
+```
+{
+    "Plant not reserve"
 }
 ```
 
