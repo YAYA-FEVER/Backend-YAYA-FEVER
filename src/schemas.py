@@ -5,7 +5,7 @@ class AuthDetails(BaseModel):
     username: str
     password: str
     permission : Optional[int] = 0
-    basketlist : Optional[dict] = {}
+    basketlist : Optional[list] = []
     
 class Product(BaseModel):
     plant_name : Optional[str]

@@ -28,7 +28,8 @@ def register(auth_details: AuthDetails):
     users.insert_one({
         'username': auth_details.username,
         'password': hashed_password,
-        'permission':auth_details.permission
+        'permission':auth_details.permission,
+        "basketlist" : []
     })
     return {"detail": "Register SUCCESS"}
 

@@ -22,10 +22,21 @@ users = db["users"]
 def shelf_plant():
     """Get all plant list"""
     plant_list = []
-    for i in plants.find({}, {"_id": 0, "ID": 1, "booking": 1}):
-        plant_list.append(i)
-    return plant_list
+    plant_list3 = []
+    result = list(plants.find({},{"_id":0 , "ID":1 , "booking":1}))
+    print(list(result))
+    for i in range(len(result)):
+        if ((i+1)%3 == 0):
+            plant_list.append(plant_list3)
+            plant_list3 = [];
+        else:
+            plant_list3.append(result[i])
+            if ((i+1) == len(result)):
+                plant_list.append(plant_list3)
         
+        
+    return plant_list
+    
 
 @router.get("/plant_detail")
 def plant_detail(product: Product):
@@ -46,12 +57,12 @@ def reserve(product: Product, username=Depends(auth_handler.auth_wrapper)):
     if (resultproduct is not None) and resultproduct["booking"] == 0:
         query = {"username" : username}
         new = {"$set" : {
-            "basketlist": user["basketlist"] + [{
+                "basketlist": user["basketlist"] + [{
                 "ID": product.ID,
                 "duedate": datetime.today()+timedelta(days=2),
                 "plant_name": resultproduct["plant_name"]
-            }]
-        }}
+            }]}
+        }
         users.update_one(query, new)
         plants.update_one({"ID": product.ID}, {"$set": {"booking":1}})
         return {
