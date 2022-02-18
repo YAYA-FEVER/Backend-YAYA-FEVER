@@ -12,13 +12,27 @@ myclient = MongoClient("localhost",27017)
 db = myclient["Yaya-Fever"]
 plants = db["plants"]
 
-@router.post("/update_humid")
+@router.post("/update/soil")
 def update_humid(product: Product):
     result = plants.find_one({"ID": product.ID})
     if (result is not None):
         query = {"ID": product.ID}
         new = {"$set" : {
             "humidity_soil_hard": product.humidity_soil_hard,
+        }}
+        plants.update_one(query,new)
+        return {
+            "update success"
+        }
+    else:
+        raise HTTPException(status_code=403, detail="Plant ID not found")
+
+@router.post("/update/air")
+def update_humid(product: Product):
+    result = plants.find_one({"ID": product.ID})
+    if (result is not None):
+        query = {"ID": product.ID}
+        new = {"$set" : {
             "humidity_air_hard": product.humidity_air_hard,
             "temp": product.temp
         }}
