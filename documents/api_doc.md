@@ -190,7 +190,7 @@ payload
   },
   "body": {
     "ID": <int>,
-    "activate": <int>
+    "activate_auto": <int>
   }
 }
 ```
@@ -213,11 +213,11 @@ permission denied
 }
 ```
 
-### __Update__ __plant__
+### __Update__ __plant__ && __Created New Plant__
 
 url
 ```
-http://127.0.0.1:8000/admin/update_plant
+http://127.0.0.1:8000/admin/new_plant
 ```
 
 payload
@@ -360,7 +360,7 @@ respond
 
 url
 ```
-http://127.0.0.1:8000/customer/plant_detail
+http://127.0.0.1:8000/customer/plant_detail/{id}
 ```
 
 payload
