@@ -1,3 +1,4 @@
+from math import prod
 from fastapi import APIRouter, Depends, HTTPException
 from ..schemas import Product
 from ..auth import AuthHandler
@@ -50,22 +51,29 @@ def plant_detail(id: int):
     else : 
         raise HTTPException(status_code=403, detail="Plant ID not found")
 
+
 @router.post("/reserve")
 def reserve(product: Product, username=Depends(auth_handler.auth_wrapper)):
     """Reserve plant"""
     resultproduct = plants.find_one({"ID": product.ID})
     user = users.find_one({"username" : username})
     if (resultproduct is not None) and resultproduct["booking"] == 0:
-        query = {"username" : username}
-        new = {"$set" : {
+        userquery = {"username" : username}
+        usernew = {"$set": {
                 "basketlist": user["basketlist"] + [{
                 "ID": product.ID,
                 "duedate": datetime.today()+timedelta(days=2),
                 "plant_name": resultproduct["plant_name"]
             }]}
         }
-        users.update_one(query, new)
-        plants.update_one({"ID": product.ID}, {"$set": {"booking":1}})
+        users.update_one(userquery, usernew)
+        plantquery = {"ID": product.ID}
+        plantnew = {"$set": {
+                "booking": 1,
+                "duedate": datetime.today()+timedelta(days=2),
+                "username": username
+        }}
+        plants.update_one(plantquery, plantnew)
         return {
             "update success"
         }
@@ -73,6 +81,32 @@ def reserve(product: Product, username=Depends(auth_handler.auth_wrapper)):
         return {
             "already reserve"
         }
+
+
+@router.post("/unreserve")
+def update_reserve(product: Product, username=Depends(auth_handler.auth_wrapper)):
+    """Update reserve status"""
+    plant = plants.find_one({"ID": product.ID})
+    user = users.find_one({"username": username})
+    if (plant is not None) and (plant["booking"] == 1):
+        newbasket = list(user["basketlist"])
+        for item in newbasket:
+            if item["ID"] == product.ID:
+                newbasket.remove(item)
+        query = {"username": username}
+        new = {"$set": {
+            "basketlist": newbasket
+        }}
+        users.update_one(query, new)
+        plants.update_one({"ID": product.ID}, {"$set": {"booking": 0}})
+        return {
+            "update success"
+        }
+    else:
+        return {
+            "Plant not reserve"
+        }
+
 
 @router.get("/basket_list")
 def basket_list(username=Depends(auth_handler.auth_wrapper)):
