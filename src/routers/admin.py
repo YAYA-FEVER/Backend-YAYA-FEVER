@@ -101,7 +101,7 @@ def new_plant(product: Product, username=Depends(auth_handler.auth_wrapper)):
         raise HTTPException(status_code=401, detail='Permission denined')
 
 
-@router.delete("/delete_plant")
+@router.post("/delete_plant")
 def delete_plant(product: Product, username=Depends(auth_handler.auth_wrapper)):
     """Delete plants"""
     result = plants.find_one({"ID": product.ID})
