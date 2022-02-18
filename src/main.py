@@ -14,6 +14,11 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+@app.get("/")
+def main_page():
+    return {
+        "YAYA-FEVER"
+    }
 
 app.include_router(admin.router)
 app.include_router(customer.router)
