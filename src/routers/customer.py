@@ -39,10 +39,10 @@ def shelf_plant():
     return plant_list
     
 
-@router.get("/plant_detail")
-def plant_detail(product: Product):
+@router.get("/plant_detail/{id}")
+def plant_detail(id: int):
     """Show plant detail for custome"""
-    query = {"ID": product.ID}
+    query = {"ID": id}
     detail = {"_id": 0, "plant_name": 1, "detail": 1, "price": 1, "ID": 1}
     result = plants.find_one(query, detail)
     if (result is not None):

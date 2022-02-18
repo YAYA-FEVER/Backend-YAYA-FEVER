@@ -21,3 +21,4 @@ class Product(BaseModel):
     booking : Optional[int] = 0
     username : Optional[str]
     duedate : Optional[int] = 3
+    water_time : Optional[int] = 0

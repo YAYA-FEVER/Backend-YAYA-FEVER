@@ -113,3 +113,18 @@ def delete_plant(product: Product, username=Depends(auth_handler.auth_wrapper)):
         }
     elif not check_permission(username):
         raise HTTPException(status_code=401, detail='Permission denined')
+    
+@router.post("/water_time")
+def water_time(product: Product, username=Depends(auth_handler.auth_wrapper)):
+    "Water_time"
+    result = plants.find_one({"ID": product.ID})
+    if (result is not None) and check_permission(username):
+        query = {"ID": product.ID}
+        new = {"$set": {"water_time": product.water_time}}
+        plants.update_one(query, new)
+        return {
+            "updated success"
+        }
+    elif not check_permission(username):
+        raise HTTPException(status_code=401, detail='Permission denined')
+

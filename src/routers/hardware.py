@@ -60,7 +60,8 @@ def update_height(product: Product):
 def auto_mode(id: int):
     detail = {"_id": 0,
         "humidity_soil_front": 1,
-        "activate_auto": 1
+        "activate_auto": 1,
+        "water_time" : 1
     }
     result = plants.find_one({"ID": id}, detail)
     if (result is not None):
