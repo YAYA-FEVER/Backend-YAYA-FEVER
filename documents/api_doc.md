@@ -418,8 +418,29 @@ already reserve
 {
     "already reserve"
 }
+```
 
-###
+### __Basket__ __list__
+
+url
+```
+http://127.0.0.1:8000/customer/basket_ist
+```
+
+Responses
+
+Have plant in basket
+```
+[
+    {
+        "ID": <int>,
+        "duedate": <datetime>,
+        "plant_name": <str>
+    },...
+    
+]
+```
+
 
 
 
