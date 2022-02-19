@@ -1,3 +1,4 @@
+from imp import NullImporter
 from pydantic import BaseModel
 from typing import Optional
 
@@ -22,4 +23,4 @@ class Product(BaseModel):
     username : Optional[str]
     duedate : Optional[int]
     water_time : Optional[int] = 0
-    img : Optional[str] = "src/img/default_plant.jpeg"
+    img : Optional[str] = "https://firebasestorage.googleapis.com/v0/b/test-fd80e.appspot.com/o/063780857652.295000000default_plant.jpeg?alt=media&token=28eef77b-7516-42af-b0a0-c0f2d9b7bcd4"

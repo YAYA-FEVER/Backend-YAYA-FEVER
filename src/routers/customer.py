@@ -44,7 +44,14 @@ def shelf_plant():
 def plant_detail(id: int):
     """Show plant detail for custome"""
     query = {"ID": id}
-    detail = {"_id": 0, "plant_name": 1, "detail": 1, "price": 1, "ID": 1}
+    detail = {
+        "_id": 0,
+        "plant_name": 1,
+        "detail": 1,
+        "price": 1,
+        "ID": 1,
+        "img": 1
+    }
     result = plants.find_one(query, detail)
     if (result is not None):
         return result
@@ -122,15 +129,3 @@ def basket_list(username=Depends(auth_handler.auth_wrapper)):
         return user["basketlist"]
     else:
         return "No plant in basket"
-
-
-@router.get("/img/{id}")
-def get_img(id: int):
-    query = {"ID": id}
-    plant = plants.find_one(query)
-    if plant is not None:
-        return FileResponse(plant["img"])
-    else:
-        return {
-            "Plant not found"
-        }

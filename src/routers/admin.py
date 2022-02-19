@@ -79,7 +79,7 @@ def humidity_front_want(product: Product, username=Depends(auth_handler.auth_wra
         raise HTTPException(status_code=401, detail='Permission denined')
 
 
-@router.post("/new_plant")
+@router.post("/set_plant")
 def new_plant(product: Product, username=Depends(auth_handler.auth_wrapper)):
     """If It's new ID add new plant If that ID already have update plant"""
     result = plants.find_one({"ID": product.ID})
@@ -95,7 +95,8 @@ def new_plant(product: Product, username=Depends(auth_handler.auth_wrapper)):
             "plant_name": product.plant_name,
             "detail": product.detail,
             "price": product.price,
-            "ID": product.ID
+            "ID": product.ID,
+            "img": product.img
         }}
         plants.update_one(query, new)
         return {
@@ -131,31 +132,3 @@ def water_time(product: Product, username=Depends(auth_handler.auth_wrapper)):
         }
     elif not check_permission(username):
         raise HTTPException(status_code=401, detail='Permission denined')
-
-
-@router.post("/image_upload/{id}")
-def img_upload(id: int, file: UploadFile = File(...), username=Depends(auth_handler.auth_wrapper)):
-    """Upload image to local"""
-    if not check_permission(username):
-        return {
-            "Permission denied"
-        }
-    fileDir = os.path.dirname(os.path.realpath('__file__'))
-    fileName = os.path.join(fileDir, f'src/img/{str(id)+file.filename}')
-    with open(fileName, "wb") as buffer:
-        shutil.copyfileobj(file.file ,buffer)
-    query = {"ID": id}
-    new = {"$set": {
-        "img": f"src/img/{str(id)+file.filename}"
-    }}
-    plant = plants.find_one(query)
-    if (plant["img"] == "src/img/default_plant.jpeg"):
-        print(1)
-        plants.update_one(query, new)
-    else:
-        print(plant["img"])
-        fileDir = os.path.dirname(os.path.realpath('__file__'))
-        fileName = os.path.join(fileDir, plant["img"])
-        os.remove(fileName)
-        plants.update_one(query, new)
-    return {"file_name": (str(id)+file.filename)}
