@@ -36,7 +36,8 @@ def get_plant_info(id: int, username=Depends(auth_handler.auth_wrapper)):
         "humidity_air_hard": 1,
         "height_hard": 1,
         "temp": 1,
-        "activate_auto": 1
+        "activate_auto": 1,
+        "img": 1
     }
     result = plants.find_one(query, detail)
     if (result is not None) and check_permission(username):
@@ -53,7 +54,11 @@ def auto_mode(product: Product, username=Depends(auth_handler.auth_wrapper)):
     result = plants.find_one({"ID": product.ID})
     if (result is not None) and check_permission(username):
         query = {"ID": product.ID}
-        new = {"$set": {"activate_auto": product.activate_auto}}
+        new = {"$set": {
+            "activate_auto": product.activate_auto,
+            "humidity_soil_front":product.humidity_soil_front,
+            "water_time":product.water_time
+        }}
         plants.update_one(query, new)
         return {
            "success"
@@ -62,21 +67,21 @@ def auto_mode(product: Product, username=Depends(auth_handler.auth_wrapper)):
         raise HTTPException(status_code=401, detail='Permission denined')
 
 
-@router.post("/humidity_front_want")
-def humidity_front_want(product: Product, username=Depends(auth_handler.auth_wrapper)):
-    """Set humidity to Hardware."""
-    result = plants.find_one({"ID": product.ID})
-    if (result is not None) and check_permission(username):
-        query = {"ID": product.ID}
-        new = {"$set": {
-            "humidity_soil_front": product.humidity_soil_front,
-        }}
-        plants.update_one(query, new)
-        return {
-            "updated success"
-        }
-    elif not check_permission(username):
-        raise HTTPException(status_code=401, detail='Permission denined')
+# @router.post("/humidity_front_want")
+# def humidity_front_want(product: Product, username=Depends(auth_handler.auth_wrapper)):
+#     """Set humidity to Hardware."""
+#     result = plants.find_one({"ID": product.ID})
+#     if (result is not None) and check_permission(username):
+#         query = {"ID": product.ID}
+#         new = {"$set": {
+#             "humidity_soil_front": product.humidity_soil_front,
+#         }}
+#         plants.update_one(query, new)
+#         return {
+#             "updated success"
+#         }
+#     elif not check_permission(username):
+#         raise HTTPException(status_code=401, detail='Permission denined')
 
 
 @router.post("/set_plant")
@@ -119,16 +124,16 @@ def delete_plant(product: Product, username=Depends(auth_handler.auth_wrapper)):
     elif not check_permission(username):
         raise HTTPException(status_code=401, detail='Permission denined')
     
-@router.post("/water_time")
-def water_time(product: Product, username=Depends(auth_handler.auth_wrapper)):
-    """Water_time"""
-    result = plants.find_one({"ID": product.ID})
-    if (result is not None) and check_permission(username):
-        query = {"ID": product.ID}
-        new = {"$set": {"water_time": product.water_time}}
-        plants.update_one(query, new)
-        return {
-            "updated success"
-        }
-    elif not check_permission(username):
-        raise HTTPException(status_code=401, detail='Permission denined')
+# @router.post("/water_time")
+# def water_time(product: Product, username=Depends(auth_handler.auth_wrapper)):
+#     """Water_time"""
+#     result = plants.find_one({"ID": product.ID})
+#     if (result is not None) and check_permission(username):
+#         query = {"ID": product.ID}
+#         new = {"$set": {"water_time": product.water_time}}
+#         plants.update_one(query, new)
+#         return {
+#             "updated success"
+#         }
+#     elif not check_permission(username):
+#         raise HTTPException(status_code=401, detail='Permission denined')
