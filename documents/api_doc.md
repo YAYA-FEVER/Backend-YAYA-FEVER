@@ -426,8 +426,12 @@ http://127.0.0.1:8000/customer/unreserve
 Request body
 ```
 {
+     "header": {
+        ...,
+        "Authorization": <token>
+    },
+    
     "ID": <int>
-    "username": <str>
 }
 ```
 
