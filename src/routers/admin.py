@@ -134,14 +134,19 @@ def water_time(product: Product, username=Depends(auth_handler.auth_wrapper)):
 
 
 @router.post("/image_upload/{id}")
-def img_upload(id: int, file: UploadFile = File(...)):
+def img_upload(id: int, file: UploadFile = File(...), username=Depends(auth_handler.auth_wrapper)):
+    """Upload image to local"""
+    if not check_permission(username):
+        return {
+            "Permission denied"
+        }
     fileDir = os.path.dirname(os.path.realpath('__file__'))
-    fileName = os.path.join(fileDir, f'src/img/{file.filename}')
+    fileName = os.path.join(fileDir, f'src/img/{str(id)+file.filename}')
     with open(fileName, "wb") as buffer:
         shutil.copyfileobj(file.file ,buffer)
     query = {"ID": id}
     new = {"$set": {
-        "img": f"src/img/{file.filename}"
+        "img": f"src/img/{str(id)+file.filename}"
     }}
     plant = plants.find_one(query)
     if (plant["img"] == "src/img/default_plant.jpeg"):
@@ -153,4 +158,4 @@ def img_upload(id: int, file: UploadFile = File(...)):
         fileName = os.path.join(fileDir, plant["img"])
         os.remove(fileName)
         plants.update_one(query, new)
-    return {"file_name": file.filename}
+    return {"file_name": (str(id)+file.filename)}
