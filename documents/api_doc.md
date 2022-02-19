@@ -333,6 +333,33 @@ permission denied
 }
 ```
 
+### __image__ __upload___
+```
+http://127.0.0.1:8000/admin/image_upload/{ID}
+```
+
+requirment
+```
+    File: <form-data>
+```
+
+reponse
+
+success
+```
+{
+    "file_name": ID+filename
+}
+```
+
+permission denied
+```
+{
+    "Permission denied"
+}
+```
+
+
 ## Customer
 
 ### __Show__ __plant__
@@ -396,8 +423,12 @@ http://127.0.0.1:8000/customer/reserve
 Request body
 ```
 {
+    "header": {
+        ...,
+        "Authorization": <token>
+    },
+    
     "ID": <int>
-    "username": <str>
 }
 ```
 
@@ -426,7 +457,7 @@ http://127.0.0.1:8000/customer/unreserve
 Request body
 ```
 {
-     "header": {
+    "header": {
         ...,
         "Authorization": <token>
     },
@@ -471,6 +502,27 @@ Have plant in basket
     ...
     
 ]
+```
+
+### __get__ __Image__
+
+url
+```
+http://127.0.0.1:8000/customer/img/{ID}
+```
+
+response
+
+success
+```
+show plant image
+```
+
+plant ID not found
+```
+{
+    "Plant not found"
+}
 ```
 
 ## Hardware
