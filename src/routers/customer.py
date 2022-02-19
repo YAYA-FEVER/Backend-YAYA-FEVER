@@ -1,11 +1,10 @@
-from logging import NullHandler
-from math import prod
 from fastapi import APIRouter, Depends, HTTPException
 from ..schemas import Product
 from ..auth import AuthHandler
 from pymongo import MongoClient
 from datetime import datetime,timedelta
-from fastapi.encoders import jsonable_encoder
+from fastapi.responses import FileResponse
+import os
 
 router = APIRouter(
    prefix="/customer",
@@ -31,7 +30,7 @@ def shelf_plant():
         if ((i+1)%3 == 0):
             plant_list3.append(result[i])
             plant_list.append(plant_list3)
-            plant_list3 = [];
+            plant_list3 = []
         else:
             plant_list3.append(result[i])
             if ((i+1) == len(result)):
@@ -123,3 +122,10 @@ def basket_list(username=Depends(auth_handler.auth_wrapper)):
         return user["basketlist"]
     else:
         return "No plant in basket"
+
+
+@router.get("/img/{id}")
+def get_img(id: int):
+    query = {"ID": id}
+    plant = plants.find_one(query)
+    return FileResponse(plant["img"])

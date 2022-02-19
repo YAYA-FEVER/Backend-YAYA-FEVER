@@ -1,8 +1,10 @@
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, HTTPException, UploadFile, File
 from ..schemas import Product
 from ..auth import AuthHandler
 from fastapi.encoders import jsonable_encoder
 from pymongo import MongoClient
+import os
+import shutil
 
 auth_handler = AuthHandler()
 
@@ -130,3 +132,25 @@ def water_time(product: Product, username=Depends(auth_handler.auth_wrapper)):
     elif not check_permission(username):
         raise HTTPException(status_code=401, detail='Permission denined')
 
+
+@router.post("/image_upload/{id}")
+def img_upload(id: int, file: UploadFile = File(...)):
+    fileDir = os.path.dirname(os.path.realpath('__file__'))
+    fileName = os.path.join(fileDir, f'src/img/{file.filename}')
+    with open(fileName, "wb") as buffer:
+        shutil.copyfileobj(file.file ,buffer)
+    query = {"ID": id}
+    new = {"$set": {
+        "img": f"src/img/{file.filename}"
+    }}
+    plant = plants.find_one(query)
+    if (plant["img"] == "src/img/default_plant.jpeg"):
+        print(1)
+        plants.update_one(query, new)
+    else:
+        print(plant["img"])
+        fileDir = os.path.dirname(os.path.realpath('__file__'))
+        fileName = os.path.join(fileDir, plant["img"])
+        os.remove(fileName)
+        plants.update_one(query, new)
+    return {"file_name": file.filename}

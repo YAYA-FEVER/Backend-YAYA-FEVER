@@ -22,3 +22,4 @@ class Product(BaseModel):
     username : Optional[str]
     duedate : Optional[int]
     water_time : Optional[int] = 0
+    img : Optional[str] = "src/img/default_plant.jpeg"
