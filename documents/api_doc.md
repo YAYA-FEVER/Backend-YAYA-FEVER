@@ -213,7 +213,7 @@ permission denied
 
 url
 ```
-http://127.0.0.1:8000/admin/new_plant
+http://127.0.0.1:8000/admin/set_plant
 ```
 
 payload
@@ -227,7 +227,8 @@ payload
         "plant_name": optional<str>,
         "detail": optional<str>,
         "price": optional<int>,
-        "ID": <int>
+        "ID": <int>,
+        "img": <str>
 }
 ```
 
@@ -333,33 +334,6 @@ permission denied
 }
 ```
 
-### __image__ __upload___
-```
-http://127.0.0.1:8000/admin/image_upload/{ID}
-```
-
-requirment
-```
-    File: <form-data>
-```
-
-reponse
-
-success
-```
-{
-    "file_name": ID+filename
-}
-```
-
-permission denied
-```
-{
-    "Permission denied"
-}
-```
-
-
 ## Customer
 
 ### __Show__ __plant__
@@ -402,7 +376,8 @@ found plant
     "plant_name": <str>,
     "detail": <str>,
     "price": <int>,
-    "ID": <int>
+    "ID": <int>,
+    "img": <str
 }
 ```
 
@@ -502,27 +477,6 @@ Have plant in basket
     ...
     
 ]
-```
-
-### __get__ __Image__
-
-url
-```
-http://127.0.0.1:8000/customer/img/{ID}
-```
-
-response
-
-success
-```
-show plant image
-```
-
-plant ID not found
-```
-{
-    "Plant not found"
-}
 ```
 
 ## Hardware
