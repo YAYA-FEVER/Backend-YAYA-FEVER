@@ -68,7 +68,6 @@ def humidity_front_want(product: Product, username=Depends(auth_handler.auth_wra
         query = {"ID": product.ID}
         new = {"$set": {
             "humidity_soil_front": product.humidity_soil_front,
-            "water_time": product.water_time
         }}
         plants.update_one(query, new)
         return {
