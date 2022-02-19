@@ -128,4 +128,9 @@ def basket_list(username=Depends(auth_handler.auth_wrapper)):
 def get_img(id: int):
     query = {"ID": id}
     plant = plants.find_one(query)
-    return FileResponse(plant["img"])
+    if plant is not None:
+        return FileResponse(plant["img"])
+    else:
+        return {
+            "Plant not found"
+        }
