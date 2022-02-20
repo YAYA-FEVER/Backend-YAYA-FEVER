@@ -3,8 +3,6 @@ from ..schemas import Product
 from ..auth import AuthHandler
 from pymongo import MongoClient
 from datetime import datetime,timedelta
-from fastapi.responses import FileResponse
-import os
 
 router = APIRouter(
    prefix="/customer",
